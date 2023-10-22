@@ -10,50 +10,52 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.models.MyRating
 import com.stack.open_work_mobile.models.RatingCompanies
 import org.w3c.dom.Text
 
-data class ListAdapterMyRating(
-    private val context: Activity,
-    private val ratingCompanies: ArrayList<MyRating>
-) : ArrayAdapter<MyRating>(context, R.layout.list_my_rating, ratingCompanies) {
-    @SuppressLint("ViewHolder")
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+class ListAdapterMyRating(
+    private val ratingCompanies: ArrayList<RatingCompanies>
+) : RecyclerView.Adapter<ListAdapterMyRating.MyViewHolderListRatingCompany>() {
 
-        val inflater: LayoutInflater = LayoutInflater.from(context)
-        val view: View = inflater.inflate(R.layout.list_my_rating, null)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MyViewHolderListRatingCompany {
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_my_rating_company, parent, false)
+        return MyViewHolderListRatingCompany(itemView)
+    }
 
-        val nameComp: TextView = view.findViewById(R.id.tv_nome_empresa2)
-        val qtStarts: TextView = view.findViewById(R.id.tv_stars2)
-        val stars: ImageView = view.findViewById(R.id.ivStar2)
-        val logo: ImageView = view.findViewById(R.id.ivLogoEmpresa)
-        val data: TextView = view.findViewById(R.id.tv_data2)
-        val descricao: TextView = view.findViewById(R.id.tv_description2)
-        val rating: RatingBar = view.findViewById(R.id.rb_starts2)
-        val button: Button = view.findViewById(R.id.btn_avaliar)
+    override fun getItemCount(): Int {
+        return ratingCompanies.size
+    }
 
-        nameComp.setText(ratingCompanies[position].nomeEmpresa)
-        qtStarts.setText(ratingCompanies[position].qtdEstrelas)
-        /*  stars.setImageResource(ratingCompanies[position].imageEstrelas)
-          logo.setImageResource(ratingCompanies[position].logo)*/
-        data.setText(ratingCompanies[position].dataAvaliacao)
-        descricao.setText(ratingCompanies[position].descricao)
+    override fun onBindViewHolder(holder: MyViewHolderListRatingCompany, position: Int) {
+        val currentItem = ratingCompanies[position]
 
-        rating.setOnRatingBarChangeListener { _, rating, _ ->
-            ratingCompanies[position].qtdEstrelas = rating.toString()
-        }
+        holder.name.text = currentItem.evaluates[position].name
+        holder.description.text = currentItem.evaluates[position].description
+        holder.timeExpected.text = currentItem.evaluates[position].timeExpected.toString()
+        holder.myGrade.text = currentItem.evaluates[position].grade.toString()
+        holder.rating.rating = currentItem.evaluates[position].grade.toFloat()
+        Glide.with(holder.itemView)
+            .load(currentItem.evaluates[position].image)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .override(100, 100)
+            .into(holder.logo)
+    }
 
-        button.setOnClickListener {
-            val currentRating = ratingCompanies[position]
-        }
-
-
-        return view
-
+    class MyViewHolderListRatingCompany(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val name: TextView = itemView.findViewById<TextView>(R.id.tv_nome_company)
+        val description: TextView = itemView.findViewById<TextView>(R.id.tv_description)
+        val timeExpected: TextView = itemView.findViewById<TextView>(R.id.tv_data)
+        val myGrade: TextView = itemView.findViewById<TextView>(R.id.tv_stars)
+        val logo: ImageView = itemView.findViewById(R.id.logoempresa)
+        val rating: RatingBar = itemView.findViewById<RatingBar>(R.id.rb_starts)
     }
 }
-
-
-

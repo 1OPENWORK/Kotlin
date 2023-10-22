@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.activities.lay_home.HomeActivity
 import com.stack.open_work_mobile.adapters.FragmentPageAdapter
+import com.stack.open_work_mobile.models.RatingCompanies
 
 
 class RatingCompanies : AppCompatActivity() {
@@ -19,6 +21,8 @@ class RatingCompanies : AppCompatActivity() {
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager2: ViewPager2
     private lateinit var adapter: FragmentPageAdapter
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rating_companies)
@@ -26,6 +30,7 @@ class RatingCompanies : AppCompatActivity() {
         tabLayout = findViewById(R.id.tabLayout)
         viewPager2 = findViewById(R.id.viewPager2)
         adapter = FragmentPageAdapter(supportFragmentManager, lifecycle)
+
 
         val btnVoltar = findViewById<ImageView>(R.id.arrow_back)
 
@@ -68,6 +73,4 @@ class RatingCompanies : AppCompatActivity() {
         })
 
     }
-
-
 }

@@ -1,14 +1,25 @@
 package com.stack.open_work_mobile.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.stack.open_work_mobile.R
+import com.stack.open_work_mobile.adapters.ListAdapterMyRating
 import com.stack.open_work_mobile.adapters.ListAdapterRatingCompany
+import com.stack.open_work_mobile.api.Rest
 import com.stack.open_work_mobile.models.RatingCompanies
+import com.stack.open_work_mobile.services.AvaliationService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,10 +35,13 @@ class RatingCompanyFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var adapter: ListAdapterMyRating
     private lateinit var rating: ArrayList<RatingCompanies>
+    private lateinit var recycleView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        rating = ArrayList()
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -38,39 +52,20 @@ class RatingCompanyFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_rating_company, container, false)
 
-        val tvId: IntArray = intArrayOf(1, 2, 3, 4, 5)
+        recycleView = view.findViewById(R.id.lvListRatingCompanies)
 
-        val tvEmpresa: Array<String> =
-            arrayOf("OpenWork", "OpenWork 2", "OpenWork 3", "OpenWork 4", "OpenWork 5")
+        recycleView.layoutManager = LinearLayoutManager(requireContext())
 
-        val tvData: Array<String> =
-            arrayOf("10/09/2023", "11/09/2023", "12/09/2023", "13/09/2023", "14/09/2023")
+        recycleView.setHasFixedSize(true)
 
-        val tvEstrela: Array<String> = arrayOf("3", "4", "5", "2", "3")
+        adapter = ListAdapterMyRating(rating)
 
-        // Resto do seu código para inicializar as listas
-
-        rating = ArrayList()
-
-        for (i in tvId.indices) {
-            val ratings =
-                RatingCompanies(
-                    tvId[i],
-                    tvEmpresa[i],
-                    tvData[i],
-                    tvEstrela[i],
-                    "Criar plataforma freelancer do zero, backend, frontend, bd conectado na nuget, e aplicação mobile."
-                )
-            rating.add(ratings)
-        }
-
-        val lvListaRatingCompanies: ListView? = view.findViewById(R.id.lvListRatingCompanies)
-        lvListaRatingCompanies?.adapter = ListAdapterRatingCompany(requireActivity(), rating)
+        recycleView.adapter = adapter
 
         return view
+
     }
 
 
@@ -92,5 +87,42 @@ class RatingCompanyFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dataInit()
+    }
+
+    private fun dataInit() {
+        val api = Rest.getInstance()?.create(AvaliationService::class.java)
+
+        val userId = 3 // Substitua pelo ID do desenvolvedor desejado
+
+        api?.getAvaliationsDev(userId)?.enqueue(object : Callback<RatingCompanies> {
+            override fun onResponse(
+                call: Call<RatingCompanies>,
+                response: Response<RatingCompanies>
+            ) {
+                if (response.isSuccessful) {
+                    val avaliationListsDto = response.body()
+
+                    if (avaliationListsDto != null) {
+                        val evaluates = avaliationListsDto.evaluates
+                        for (evaluate in evaluates) {
+                            rating.add(avaliationListsDto)
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+                } else {
+                    Toast.makeText(requireContext(), response.message(), Toast.LENGTH_LONG).show()
+                    print("Message: ${response.message()}\n" + "Error Body: ${response.errorBody()}\n" + "Header: ${response.headers()}")
+                }
+            }
+
+            override fun onFailure(call: Call<RatingCompanies>, t: Throwable) {
+                Toast.makeText(requireContext(), t.message, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }

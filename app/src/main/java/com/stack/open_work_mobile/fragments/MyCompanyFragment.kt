@@ -1,117 +1,122 @@
 package com.stack.open_work_mobile.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ListView
-import android.widget.RatingBar
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.stack.open_work_mobile.Interface.OnAvaliarClickListener
 import com.stack.open_work_mobile.R
-import com.stack.open_work_mobile.adapters.ListAdapterMyRating
 import com.stack.open_work_mobile.adapters.ListAdapterRatingCompany
-import com.stack.open_work_mobile.models.MyRating
+import com.stack.open_work_mobile.api.Rest
+import com.stack.open_work_mobile.models.RatingCompanies
+import com.stack.open_work_mobile.services.AvaliationService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MyCompanyFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class MyCompanyFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
 
-    private lateinit var rating: ArrayList<MyRating>
+    private lateinit var rating: ArrayList<RatingCompanies>
+    private lateinit var recycleView: RecyclerView
+    private lateinit var adapter: ListAdapterRatingCompany
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        rating = ArrayList()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_my_rating, container, false)
 
-        val tvId: IntArray = intArrayOf(1, 2, 3, 4, 5)
+        recycleView = view.findViewById(R.id.lvListMyRating)
 
-        val tvEmpresa: Array<String> =
-            arrayOf("OpenWork", "OpenWork 2", "OpenWork 3", "OpenWork 4", "OpenWork 5")
+        recycleView.layoutManager = LinearLayoutManager(requireContext())
 
-        val tvData: Array<String> =
-            arrayOf("10/09/2023", "11/09/2023", "12/09/2023", "13/09/2023", "14/09/2023")
+        recycleView.setHasFixedSize(true)
 
-        val tvEstrela: Array<String> = arrayOf("3", "4", "5", "2", "3")
+        adapter = ListAdapterRatingCompany(rating, this)
 
-        val rbRatingBar: RatingBar
-        val btnAvaliar: Button
-
-
-        // Resto do seu código para inicializar as listas
-
-        rating = ArrayList()
-
-        for (i in tvId.indices) {
-            val ratings = MyRating(
-                tvId[i],
-                tvEmpresa[i],
-                tvData[i],
-                tvEstrela[i],
-                "Criar plataforma freelancer do zero, backend, frontend, bd conectado na nuget, e aplicação mobile."
-            )
-
-            // Configurar o RatingBar
-            ratings.rating = RatingBar(context)
-            ratings.rating?.numStars = 5
-            ratings.rating?.rating = tvEstrela[i].toFloat()
-
-            // Configurar o Button
-            ratings.button = Button(context)
-            ratings.button?.text = "Avaliar"
-
-            // Configurar ouvintes de eventos para o RatingBar e o Button, se necessário
-            ratings.rating?.setOnRatingBarChangeListener { _, rating, _ ->
-                // Lidar com a mudança de classificação, se necessário
-            }
-
-            ratings.button?.setOnClickListener {
-                // Lidar com o clique no botão, se necessário
-            }
-
-            rating.add(ratings)
-        }
-
-
-        val lvListMyRating: ListView? = view.findViewById(R.id.lvListMyRating)
-        lvListMyRating?.adapter = ListAdapterMyRating(requireActivity(), rating)
+        recycleView.adapter = adapter
 
         return view
     }
 
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SecondFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MyCompanyFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dataInit()
+    }
+
+    override fun onAvaliarClick(grade: Int) {
+        val api = Rest.getInstance()?.create(AvaliationService::class.java)
+        val userId = 1 // Substitua pelo ID da empresa ou desenvolvedor desejado
+
+        // Configurar a chamada para enviar a avaliação
+        val call = api?.registerAvaliationDeveloper(userId, grade) // Convertemos o valor da classificação para um inteiro
+
+
+        call?.enqueue(object : Callback<RatingCompanies> {
+            override fun onResponse(call: Call<RatingCompanies>, response: Response<RatingCompanies>) {
+                if (response.isSuccessful) {
+                    Log.e("API Success", "Sucesso!")
+                    dataInit()
+                } else {
+                    // Lidar com erros na resposta
+                    Log.e("API Error", "Falha ao enviar a avaliação ${grade }")
                 }
             }
+
+            override fun onFailure(call: Call<RatingCompanies>, t: Throwable) {
+                // Lidar com falhas na chamada
+                Log.e("API Error", "Erro na chamada")            }
+        })
     }
+
+
+
+    private fun dataInit() {
+        val api = Rest.getInstance()?.create(AvaliationService::class.java)
+        val list: ArrayList<RatingCompanies> = ArrayList()
+
+        api?.getAvaliationsCompany(1)?.enqueue(object : Callback<RatingCompanies> {
+            override fun onResponse(
+                call: Call<RatingCompanies>,
+                response: Response<RatingCompanies>
+            ) {
+                if (response.isSuccessful) {
+                    val avaliationListsDto = response.body()
+                    Log.e("API Success", "Sucesso! $avaliationListsDto")
+                    if (avaliationListsDto != null) {
+                        val evaluates = avaliationListsDto.evaluates
+                        for (evaluate in evaluates) {
+                            rating.add(avaliationListsDto)
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+                } else {
+                    Toast.makeText(requireContext(), response.message(), Toast.LENGTH_LONG).show()
+                    print("Message: ${response.message()}\n" + "Error Body: ${response.errorBody()}\n" + "Header: ${response.headers()}")
+                }
+            }
+
+            override fun onFailure(call: Call<RatingCompanies>, t: Throwable) {
+                Toast.makeText(requireContext(), t.message, Toast.LENGTH_LONG).show()
+            }
+        })
+    }
+
+
 }

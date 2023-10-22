@@ -7,7 +7,7 @@ class MyRating(
     var id: Int,
     var nomeEmpresa: String,
     var dataAvaliacao: String,
-   var qtdEstrelas: String,
+    var qtdEstrelas: String,
     /*  var estrelas: Float,*/
     /*var imageEstrelas: Int,
     var logo: Int,*/

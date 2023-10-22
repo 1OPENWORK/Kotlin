@@ -1,53 +1,66 @@
 package com.stack.open_work_mobile.adapters
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.stack.open_work_mobile.Interface.OnAvaliarClickListener
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.models.RatingCompanies
 
-data class ListAdapterRatingCompany(
-    private val context: Activity,
-    private val ratingCompanies: ArrayList<RatingCompanies>
-) : ArrayAdapter<RatingCompanies>(context, R.layout.list_my_rating_company, ratingCompanies) {
-    @SuppressLint("ViewHolder")
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
-        val inflater: LayoutInflater = LayoutInflater.from(context)
-        val view: View = inflater.inflate(R.layout.list_my_rating_company, null)
+class ListAdapterRatingCompany(
+    private val ratingCompaniesList: ArrayList<RatingCompanies>,
+    private val clickListener: OnAvaliarClickListener
+) :
+    RecyclerView.Adapter<ListAdapterRatingCompany.MyViewHolderListRatingCompany>() {
 
-        val nameComp: TextView = view.findViewById(R.id.tv_nome_company)
-        val qtStarts: TextView = view.findViewById(R.id.tv_stars)
-        val stars: ImageView = view.findViewById(R.id.ivStar)
-        val logo: ImageView = view.findViewById(R.id.logoempresa)
-        val data: TextView = view.findViewById(R.id.tv_data)
-        val descricao: TextView = view.findViewById(R.id.tv_description)
-        val rating: RatingBar = view.findViewById(R.id.rb_starts)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MyViewHolderListRatingCompany {
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_my_rating, parent, false)
+        return MyViewHolderListRatingCompany(itemView)
+    }
 
-        nameComp.setText(ratingCompanies[position].nomeEmpresa)
-        qtStarts.setText(ratingCompanies[position].qtdEstrelas)
-      /*  stars.setImageResource(ratingCompanies[position].imageEstrelas)
-        logo.setImageResource(ratingCompanies[position].logo)*/
-        data.setText(ratingCompanies[position].dataAvaliacao)
-        descricao.setText(ratingCompanies[position].descricao)
-  /*      rating.setOnRatingBarChangeListener(object : RatingBar.OnRatingBarChangeListener {
-            override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
-                val newRating = 4.5f
-                ratingBar?.rating = newRating
-                ratingCompanies[position].estrelas = newRating
-            }
-        })*/
+    override fun getItemCount(): Int {
+        return ratingCompaniesList.size
+    }
 
-        return view
+    override fun onBindViewHolder(holder: MyViewHolderListRatingCompany, position: Int) {
+        val currentItem = ratingCompaniesList[position]
 
+        holder.name.text = currentItem.myAvaliations[position].name
+        holder.description.text = currentItem.myAvaliations[position].description
+        holder.timeExpected.text = currentItem.myAvaliations[position].timeExpected.toString()
+        holder.grade.text = currentItem.myAvaliations[position].grade.toString()
+        holder.rating.rating = currentItem.myAvaliations[position].myGrade.toFloat()
+        Glide.with(holder.itemView)
+            .load(currentItem.myAvaliations[position].image)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .override(100, 100)
+            .into(holder.logo)
+        holder.buttonAvaliar.setOnClickListener {
+            val grade = holder.rating.rating
+            clickListener.onAvaliarClick(grade.toInt())
+        }
+    }
+
+
+    class MyViewHolderListRatingCompany(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val name: TextView = itemView.findViewById<TextView>(R.id.tv_nome_empresa2)
+        val description: TextView = itemView.findViewById<TextView>(R.id.tv_description2)
+        val timeExpected: TextView = itemView.findViewById<TextView>(R.id.tv_data2)
+        val grade: TextView = itemView.findViewById<TextView>(R.id.tv_stars2)
+        val buttonAvaliar: Button = itemView.findViewById<Button>(R.id.btn_avaliar)
+        val rating: RatingBar = itemView.findViewById<RatingBar>(R.id.rb_starts2)
+        val logo: ImageView = itemView.findViewById(R.id.ivLogoEmpresa)
     }
 }
-
-
-
