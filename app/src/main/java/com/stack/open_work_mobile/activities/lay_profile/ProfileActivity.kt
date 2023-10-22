@@ -3,13 +3,16 @@ package com.stack.open_work_mobile.activities.lay_profile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.activities.lay_home.HomeActivity
 import com.stack.open_work_mobile.activities.lay_home.HomeMenuFragment
+import com.stack.open_work_mobile.activities.lay_my_projects.ProjectProgressCard
 import com.stack.open_work_mobile.api.Rest
 import com.stack.open_work_mobile.databinding.ActivityProfileBinding
 import com.stack.open_work_mobile.databinding.FragmentHomeMenuBinding
+import com.stack.open_work_mobile.models.ApiResponse
 import com.stack.open_work_mobile.models.ProfileModel
 import com.stack.open_work_mobile.services.ProfileService
 import retrofit2.Call
@@ -27,7 +30,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private val home by lazy {
-        Intent(this, HomeMenuFragment::class.java)
+        Intent(this, HomeActivity::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,13 +49,10 @@ class ProfileActivity : AppCompatActivity() {
             this.getSharedPreferences("IDENTIFY", MODE_PRIVATE)
                 .getLong("ID", 0)
 
-        api?.getProfileInfo(userId)?.enqueue(object : Callback<ProfileModel> {
-            override fun onResponse(
-                call: Call<ProfileModel>,
-                response: Response<ProfileModel>
-            ) {
+        api?.getProfileInfo(userId)?.enqueue(object : Callback<ApiResponse> {
+            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if (response.isSuccessful) {
-                    val profile = response.body()
+                    val profile = response.body()?.perfil
                     val nome = profile?.name
                     val inputNome = findViewById<EditText>(R.id.input_nome)
                     inputNome.setText(nome)
@@ -71,7 +71,7 @@ class ProfileActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call<ProfileModel>, t: Throwable) {
+            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
                 TODO("Not yet implemented")
             }
         })

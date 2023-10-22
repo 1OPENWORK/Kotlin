@@ -20,9 +20,6 @@
             android:name=".activities.lay_profile.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.lay_profile.ProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.Rating.RatingCompanies"
             android:exported="false" />
         <activity
