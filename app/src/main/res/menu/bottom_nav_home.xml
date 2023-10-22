@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <item
+        android:id="@+id/house_home_id"
+        android:icon="@drawable/ic_house_menu_home"
+        tools:ignore="MenuTitle"
+        />
+    <item
+        android:id="@+id/project_home_id"
+        android:icon="@drawable/ic_project_menu_home"
+        tools:ignore="MenuTitle"
+        />
+    <item
+        android:id="@+id/my_project_home_id"
+        android:icon="@drawable/ic_my_project_menu_home"
+        tools:ignore="MenuTitle" />
+    <item
+        android:id="@+id/avaliation_home_id"
+        android:icon="@drawable/ic_avaliation_menu_home"
+        tools:ignore="MenuTitle" />
+    <item
+        android:id="@+id/finance_home_id"
+        android:icon="@drawable/ic_finance_menu_home"
+        tools:ignore="MenuTitle" />
+</menu>

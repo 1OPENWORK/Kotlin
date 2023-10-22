@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="BLACK">#161616</color>
+    <color name="WHITE">#FFFFFFFF</color>
+    <color name="PRIMARY_GREEN">#20AC69</color>
+    <color name="BLACK_GRAY">#161616</color>
+    <color name="SECODNARY_GREEEN">#20AC69</color>
+    <color name="GRAY">#B4B4B4</color>
+    <color name="yellowstar">#FF9800</color>
+</resources>

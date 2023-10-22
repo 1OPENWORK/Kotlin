@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.lay_home.HomeMenuFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/constraintPai"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/trend"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_marginLeft="34dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="34dp"
+                android:text="Tendências Populares"
+                android:textColor="@color/PRIMARY_GREEN"
+                android:textSize="16sp"
+                android:textStyle="bold|normal"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linearForTrend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="34dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginRight="34dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/trend">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="33dp"
+                    android:text="1# Java"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="33dp"
+                    android:text="2# React Native"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="33dp"
+                    android:text="3# Infraestrutura cloud"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/projectsMenu"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_marginLeft="34dp"
+                android:layout_marginTop="42dp"
+                android:layout_marginRight="34dp"
+                android:text="Projetos"
+                android:textColor="@color/PRIMARY_GREEN"
+                android:textSize="16sp"
+                android:textStyle="bold|normal"
+                app:layout_constraintTop_toBottomOf="@id/linearForTrend" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_view_card_home"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/projectsMenu"
+                tools:listitem="@layout/list_item_project_home_open" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </FrameLayout>
+</androidx.core.widget.NestedScrollView>

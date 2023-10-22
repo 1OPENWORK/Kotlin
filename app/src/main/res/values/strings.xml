@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">open-work-mobile</string>
+    <string name="ic_progress_text">Andamento</string>
+    <string name="ic_completed_text">Completo</string>
+    <string name="ic_canceled_text">Cancelado</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textNotifyExample">Seu pagamento no valor de R$1.500 do projeto XPTO ja esta la na sua carteira, clique e confira.</string>
+    <string name="avalia_es">Avaliações</string>
+    <string name="minhas_aval">Minhas avaliações</string>
+    <string name="avaliar">Avaliar</string>
+    <string name="textcompaniedescription">Criar plataforma freelancer do zero, backend, frontend, bd conectado na nuvem, e aplicação mobile. </string>
+
+</resources>
