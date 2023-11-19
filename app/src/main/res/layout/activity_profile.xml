@@ -11,14 +11,39 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="32dp">
 
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/nunito_black"
+            android:text="Perfil"
+            android:textColor="@color/PRIMARY_GREEN"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Edite suas informações quando quiser"
+            android:textColor="@color/PRIMARY_GREEN"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
         <ImageView
             android:id="@+id/icon_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/icon_edit"
             android:src="@drawable/arrow_back"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title" />
 
         <ImageView
             android:id="@+id/icon_edit"
@@ -36,147 +61,134 @@
             android:src="@drawable/img_user_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/RoundedImageView"
-            />
+            app:layout_constraintTop_toBottomOf="@id/subtitle"
+            app:shapeAppearanceOverlay="@style/RoundedImageView" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/container_nome"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/container_nome"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_profile"
+            android:textColorHint="@color/PRIMARY_GREEN"
+            app:boxBackgroundColor="@color/PRIMARY_GREEN_LIGHT">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_nome"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_profile"
-                android:layout_marginTop="16dp">
+                android:layout_height="match_parent"
+                android:background="@color/WHITE"
+                android:hint="Nome"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="14sp"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_nome"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/WHITE"
-                    android:hint="Nome"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textSize="14sp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/container_email"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_nome">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="textEmailAddress"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
-                    android:maxLines="1"
-                    android:hint="E-mail"
-                    android:background="@color/WHITE"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/container_cpf"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_email">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_cpf"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
-                    android:inputType="number"
-                    android:textSize="14sp"
-                    android:maxLines="1"
-                    android:maxLength="14"
-                    android:hint="CPF"
-                    android:background="@color/WHITE"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/container_telefone"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_cpf">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_telefone"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="phone"
-                    android:textSize="14sp"
-                    android:layout_marginTop="16dp"
-                    android:maxLines="1"
-                    android:hint="Telefone"
-                    android:background="@color/WHITE"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/container_senha"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_telefone">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_senha"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
-                    android:hint="Senha"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:textSize="14sp"
-                    android:background="@color/WHITE"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/container_confirmar_senha"
-                style="@style/Widget.Material3.TextInputLayout.FilledBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/container_senha">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_confirmar_senha"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
-                    android:inputType="textPassword"
-                    android:textSize="14sp"
-                    android:maxLines="1"
-                    android:hint="Confirmar Senha"
-                    android:background="@color/WHITE" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_salvar"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/container_email"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/container_confirmar_senha"
-            android:text="Salvar"
+            app:layout_constraintTop_toBottomOf="@id/container_nome"
+            android:textColorHint="@color/PRIMARY_GREEN"
+            app:boxBackgroundColor="@color/PRIMARY_GREEN_LIGHT">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:background="@color/WHITE"
+                android:hint="E-mail"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:textSize="14sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/container_cpf"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_email"
+            android:enabled="false"
+            android:textColorHint="@color/PRIMARY_GREEN"
+            app:boxBackgroundColor="@color/PRIMARY_GREEN_LIGHT">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_cpf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:background="@color/WHITE"
+                android:hint="CPF"
+                android:inputType="number"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:textSize="14sp"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/container_telefone"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_cpf"
+            android:textColorHint="@color/PRIMARY_GREEN"
+            app:boxBackgroundColor="@color/PRIMARY_GREEN_LIGHT">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_telefone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:hint="Telefone"
+                android:inputType="phone"
+                android:maxLines="1"
+                android:textSize="14sp"
+                android:maxLength="15"
+                android:background="@color/WHITE"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_salvar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/green_button"
+            android:fontFamily="@font/nunito_black"
+            android:text="Alterar dados"
             android:textAllCaps="false"
             android:textColor="@color/WHITE"
-            android:fontFamily="@font/nunito_black"
             android:textSize="18sp"
-            android:background="@drawable/green_button"
-            android:layout_marginTop="16dp"
-            />
+            app:layout_constraintEnd_toStartOf="@id/btn_excluir"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_telefone" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_excluir"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_black_button"
+            android:fontFamily="@font/nunito_black"
+            android:text="Excluir conta"
+            android:textAllCaps="false"
+            android:textColor="@color/WHITE"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@id/btn_salvar"
+            app:layout_constraintTop_toTopOf="@id/btn_salvar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
