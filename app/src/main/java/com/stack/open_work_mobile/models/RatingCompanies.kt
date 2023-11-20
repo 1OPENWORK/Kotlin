@@ -1,10 +1,5 @@
 package com.stack.open_work_mobile.models
 
-import android.media.Rating
-import android.widget.Button
-import android.widget.RatingBar
-import java.time.LocalDateTime
-
 data class RatingCompanies(
     val myAvaliations: List<MyAvaliation>, // O tipo real deve ser definido corretamente
     val evaluates: List<Evaluate>
