@@ -96,15 +96,19 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(
                             baseContext,
                             "Login efetuado com sucesso!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            Toast.LENGTH_SHORT)
+                            .show()
                         navMainState()
                     }, 100)
                 }
             }
 
             override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
-                Toast.makeText(baseContext, t.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    baseContext,
+                    "Não foi possível realizar login",
+                    Toast.LENGTH_SHORT)
+                    .show()
             }
         })
     }

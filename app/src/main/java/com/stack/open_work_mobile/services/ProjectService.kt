@@ -20,4 +20,7 @@ interface ProjectService {
 
     @GET("/api/projetos/user/{userId}")
     fun getAllProjectsUserTools(@Path("userId") id: Long): Call<List<CardProjectHome>>
+
+    @GET("/api/projetos")
+    fun getAllProjects(): Call<List<CardProjectHome>>
 }

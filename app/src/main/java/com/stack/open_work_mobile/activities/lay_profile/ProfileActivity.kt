@@ -5,17 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+<<<<<<< HEAD
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
+=======
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
+>>>>>>> 8207f93f9f732298cd8da1cd175546fc445406af
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.activities.lay_home.HomeActivity
-import com.stack.open_work_mobile.activities.lay_home.HomeMenuFragment
-import com.stack.open_work_mobile.activities.lay_my_projects.ProjectProgressCard
 import com.stack.open_work_mobile.api.Rest
 import com.stack.open_work_mobile.databinding.ActivityProfileBinding
-import com.stack.open_work_mobile.databinding.FragmentHomeMenuBinding
 import com.stack.open_work_mobile.models.ApiResponse
-import com.stack.open_work_mobile.models.ProfileModel
 import com.stack.open_work_mobile.services.ProfileService
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,12 +37,18 @@ class ProfileActivity : AppCompatActivity() {
         Intent(this, HomeActivity::class.java)
     }
 
+    private lateinit var dialog: AlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         binding.iconBack.setOnClickListener {
             startActivity(home)
+        }
+
+        binding.btnExcluir.setOnClickListener {
+            showDialog()
         }
 
         tryGetInfo()
@@ -80,8 +88,41 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    private fun showDialog() {
+        val userId =
+            this.getSharedPreferences("IDENTIFY", MODE_PRIVATE)
+                .getLong("ID", 0)
+
+        val build = AlertDialog.Builder(this, R.style.ThemeCustomDialog)
+        val view = layoutInflater.inflate(R.layout.activity_modal, null)
+        build.setView(view)
+
+        val btnCancel = view.findViewById<AppCompatButton>(R.id.btn_cancel)
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        val btnDelete = view.findViewById<AppCompatButton>(R.id.btn_delete)
+        btnDelete.setOnClickListener {
+            api?.deleteProfile(userId)?.enqueue(object : Callback<ApiResponse> {
+                override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+                    if (response.isSuccessful) {
+                        Log.d(response.toString(), "testando")
+                        build.setView(R.layout.activity_entrance)
+                    }
+                }
+
+                override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                    Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
+                }
+            })
+        }
+        dialog = build.create()
+        dialog.show()
     }
 }
