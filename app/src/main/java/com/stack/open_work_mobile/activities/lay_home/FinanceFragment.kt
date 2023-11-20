@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.activities.lay_my_projects.ProjectProgressCard
@@ -24,6 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
+import com.bumptech.glide.Glide
 
 
 class FinanceFragment : Fragment() {
@@ -33,6 +34,11 @@ class FinanceFragment : Fragment() {
     private val userID by lazy {
         requireContext()
             .getSharedPreferences("IDENTIFY", Context.MODE_PRIVATE)
+            .getLong("ID", 0)
+    }
+    private val userImg by lazy {
+        requireContext()
+            .getSharedPreferences("IMG", Context.MODE_PRIVATE)
             .getLong("ID", 0)
     }
 
@@ -134,7 +140,12 @@ class FinanceFragment : Fragment() {
                                 60.dpToPx(requireContext()),
                                 48.dpToPx(requireContext()),
                             )
-                            logoEmpresa.setImageResource(R.drawable.logo_small)
+                            //logoEmpresa.setImageResource(R.drawable.logo_small)
+                            //logoEmpresa.setImageResource(financeModel.imageCompany)
+                            val urlDaImagem: String = financeModel.imageCompany
+                            Glide.with(requireContext())
+                                .load(urlDaImagem)
+                                .into(logoEmpresa)
                             newLinearLayout.addView(logoEmpresa)
 
 
@@ -152,14 +163,13 @@ class FinanceFragment : Fragment() {
                                 0 // Padding inferior
                             )
 
-                            // Adicione o nome do projeto (TextView) ao novo LinearLayout de informações do projeto
                             val nomeJob = TextView(requireContext())
                             nomeJob.layoutParams = LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 LinearLayout.LayoutParams.WRAP_CONTENT
                             )
                             nomeJob.text =
-                                financeModel.titleProject // Configure o texto com base nos dados do modelo
+                                financeModel.titleProject
                             nomeJob.gravity = Gravity.CENTER
                             nomeJob.setTextColor(Color.WHITE)
                             nomeJob.textSize = 12f
@@ -171,7 +181,6 @@ class FinanceFragment : Fragment() {
                             )
                             linearSubCard.addView(nomeJob)
 
-                            // Adicione a data do projeto (TextView) ao novo LinearLayout de informações do projeto
                             val dataJob = TextView(requireContext())
                             dataJob.layoutParams = LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -201,7 +210,7 @@ class FinanceFragment : Fragment() {
                                 LinearLayout.LayoutParams.WRAP_CONTENT
                             )
                             valorJob.text =
-                                "$" + financeModel.value.toString() // Configure o texto com base nos dados do modelo
+                                "R$" + financeModel.value.toString()
                             valorJob.gravity = Gravity.CENTER
                             valorJob.setTextColor(Color.WHITE)
                             valorJob.textSize = 12f
@@ -258,7 +267,7 @@ class FinanceFragment : Fragment() {
                         val primeiroValor = financeModelList.firstOrNull()
                         if (primeiroValor != null) {
                             val tituloTextView = view?.findViewById<TextView>(R.id.titulo)
-                            tituloTextView?.text = "$" + primeiroValor.value.toString()
+                            tituloTextView?.text = "R$" + primeiroValor.value.toString()
 
 
                         }
@@ -289,7 +298,10 @@ class FinanceFragment : Fragment() {
                                 60.dpToPx(requireContext()),
                                 48.dpToPx(requireContext()),
                             )
-                            logoEmpresa.setImageResource(R.drawable.logo_small)
+                            val urlDaImagem: String = financeModel.imageCompany
+                            Glide.with(requireContext())
+                                .load(urlDaImagem)
+                                .into(logoEmpresa)
                             newLinearLayout.addView(logoEmpresa)
 
 
@@ -356,7 +368,7 @@ class FinanceFragment : Fragment() {
                                 LinearLayout.LayoutParams.WRAP_CONTENT
                             )
                             valorJob.text =
-                                "$" + financeModel.value.toString() // Configure o texto com base nos dados do modelo
+                                "R$" + financeModel.value.toString() // Configure o texto com base nos dados do modelo
                             valorJob.gravity = Gravity.CENTER
                             valorJob.setTextColor(Color.WHITE)
                             valorJob.textSize = 12f
@@ -373,15 +385,15 @@ class FinanceFragment : Fragment() {
                         media /= financeModelList.size
                         val aumentoPorcentagem =
                             ((primeiroValor?.value ?: 0.0 - media) / media) * 100.0
-                        val mediaDinheiro = somaTotalDinheiro / contagemElementosDinheiro
+                       val mediaDinheiro = somaTotalDinheiro / contagemElementosDinheiro
 
                         // Porcentagem do ultimo projeto recebido comparado com a media de todos os projetos recebidos
                         val tituloTextView2 = view?.findViewById<TextView>(R.id.porcentagem)
-                        tituloTextView2?.text = "%" + aumentoPorcentagem.toString()
+                        tituloTextView2?.text = "Valor recebido:"
 
                         // media de todos os projetos recebidos
                         val tituloTextView3 = view?.findViewById<TextView>(R.id.porcentagemNum)
-                        tituloTextView3?.text = mediaDinheiro.toString()
+                        tituloTextView3?.text = "R$" + somaTotalDinheiro.toString()
 
                     } else {
                         //lista vazia
@@ -442,7 +454,10 @@ class FinanceFragment : Fragment() {
                                 60.dpToPx(requireContext()),
                                 48.dpToPx(requireContext()),
                             )
-                            logoEmpresa.setImageResource(R.drawable.logo_small)
+                            val urlDaImagem: String = financeModel.imageCompany
+                            Glide.with(requireContext())
+                                .load(urlDaImagem)
+                                .into(logoEmpresa)
                             newLinearLayout.addView(logoEmpresa)
 
 
@@ -509,7 +524,7 @@ class FinanceFragment : Fragment() {
                                 LinearLayout.LayoutParams.WRAP_CONTENT
                             )
                             valorJob.text =
-                                "$" + financeModel.value.toString() // Configure o texto com base nos dados do modelo
+                                "R$" + financeModel.value.toString() // Configure o texto com base nos dados do modelo
                             valorJob.gravity = Gravity.CENTER
                             valorJob.setTextColor(Color.WHITE)
                             valorJob.textSize = 12f
