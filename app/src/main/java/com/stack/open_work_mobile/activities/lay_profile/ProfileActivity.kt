@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+import com.bumptech.glide.Glide
+import com.google.android.material.imageview.ShapeableImageView
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.activities.lay_home.HomeActivity
 import com.stack.open_work_mobile.activities.lay_home.HomeMenuFragment
@@ -45,9 +47,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun tryGetInfo() {
-        val userId =
-            this.getSharedPreferences("IDENTIFY", MODE_PRIVATE)
-                .getLong("ID", 0)
+        val userId = this.getSharedPreferences("IDENTIFY", MODE_PRIVATE).getLong("ID", 0)
 
         api?.getProfileInfo(userId)?.enqueue(object : Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
@@ -68,6 +68,14 @@ class ProfileActivity : AppCompatActivity() {
                     val cpf = profile?.cpfCnpj
                     val inputCpf = findViewById<EditText>(R.id.input_cpf)
                     inputCpf.setText(cpf)
+
+                    val imgUrl = profile?.image
+                    if (imgUrl != null) {
+                        val imgProfile = findViewById<ShapeableImageView>(R.id.img_profile)
+                        Glide.with(this@ProfileActivity)
+                            .load(imgUrl)
+                            .into(imgProfile)
+                    }
                 }
             }
 
