@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
+<<<<<<< HEAD
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
+=======
+import com.bumptech.glide.Glide
+import com.google.android.material.imageview.ShapeableImageView
+>>>>>>> 8207f93f9f732298cd8da1cd175546fc445406af
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.activities.lay_home.HomeActivity
 import com.stack.open_work_mobile.api.Rest
@@ -50,9 +55,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun tryGetInfo() {
-        val userId =
-            this.getSharedPreferences("IDENTIFY", MODE_PRIVATE)
-                .getLong("ID", 0)
+        val userId = this.getSharedPreferences("IDENTIFY", MODE_PRIVATE).getLong("ID", 0)
 
         api?.getProfileInfo(userId)?.enqueue(object : Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
@@ -73,6 +76,14 @@ class ProfileActivity : AppCompatActivity() {
                     val cpf = profile?.cpfCnpj
                     val inputCpf = findViewById<EditText>(R.id.input_cpf)
                     inputCpf.setText(cpf)
+
+                    val imgUrl = profile?.image
+                    if (imgUrl != null) {
+                        val imgProfile = findViewById<ShapeableImageView>(R.id.img_profile)
+                        Glide.with(this@ProfileActivity)
+                            .load(imgUrl)
+                            .into(imgProfile)
+                    }
                 }
             }
 

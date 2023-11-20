@@ -57,8 +57,13 @@
             android:id="@+id/img_profile"
             android:layout_width="141dp"
             android:layout_height="141dp"
+<<<<<<< HEAD
             android:layout_marginTop="16dp"
             android:src="@drawable/img_user_profile"
+=======
+            android:layout_marginTop="40dp"
+            android:src="@drawable/green_button"
+>>>>>>> 8207f93f9f732298cd8da1cd175546fc445406af
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/subtitle"

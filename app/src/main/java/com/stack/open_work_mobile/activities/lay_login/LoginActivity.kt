@@ -78,6 +78,8 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val auth = getSharedPreferences("AUTH", MODE_PRIVATE)
                     val id = getSharedPreferences("IDENTIFY", MODE_PRIVATE)
+                    val img = getSharedPreferences("IMAGE", MODE_PRIVATE)
+
                     val editorAuth = auth.edit()
                     editorAuth.putString("TOKEN", response.body()?.token)
                     editorAuth.apply()
@@ -85,6 +87,10 @@ class LoginActivity : AppCompatActivity() {
                     val editorId = id.edit()
                     response.body()?.userId?.let { editorId.putLong("ID", it.toLong()) }
                     editorId.apply()
+
+                    val editorImg = img.edit()
+                    response.body()?.image?.let { editorImg.putString("IMG", it) }
+                    editorImg.apply()
 
                     Handler(Looper.getMainLooper()).postDelayed({
                         Toast.makeText(
