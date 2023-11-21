@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.lay_home.DetailActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/arrow_back"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:src="@drawable/ic_arrow_back_header_my_project"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="24dp"
+        />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image_company"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintStart_toStartOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/arrow_back"
+        android:layout_marginTop="8dp"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
+        android:layout_marginBottom="12dp"/>
+    <TextView
+        android:id="@+id/company_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome da companhia"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/image_company"
+        app:layout_constraintTop_toTopOf="@id/image_company"
+        android:layout_marginStart="8dp"
+        />
+
+    <TextView
+        android:id="@+id/date_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20/08/23"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/company_name"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+         />
+
+
+    <TextView
+        android:id="@+id/contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+55 (11) 5000-4222"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/company_name"
+        app:layout_constraintTop_toBottomOf="@id/company_name"
+        app:layout_constraintBottom_toBottomOf="@id/image_company"
+        android:textStyle="bold"
+        />
+    <View
+        app:layout_constraintStart_toEndOf="@id/contact"
+        app:layout_constraintTop_toTopOf="@id/contact"
+        app:layout_constraintBottom_toBottomOf="@id/contact"
+        android:layout_height="16dp"
+        android:layout_width="16dp"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/email_24"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/view_project_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome Projeto"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintTop_toBottomOf="@id/image_company"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        />
+
+    <TextView
+        android:id="@+id/view_detail_company"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Nome ProjetoNome ProjetoNome ProjetoNome ProjetoNome ProjetoNome ProjetoNome ProjetoNome ProjetoNome ProjetoNome ProjetoNome ProjetoNome Projeto"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintTop_toBottomOf="@id/view_project_name"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:id="@+id/view_contribu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6 integrantes"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintTop_toBottomOf="@id/view_detail_company"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        />
+
+
+
+
+
+    <TextView
+        android:id="@+id/view_date_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data final: "
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@id/view_contribu"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        />
+
+    <TextView
+        android:id="@+id/date_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="29/08/2023"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/view_date_end"
+        app:layout_constraintTop_toBottomOf="@id/view_contribu"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
+        />
+
+    <TextView
+        android:id="@+id/view_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor bruto: R$"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/view_date_end"
+        app:layout_constraintTop_toBottomOf="@id/view_date_end"
+        android:layout_marginTop="6dp"
+        />
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="30.000,00"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/view_value"
+        app:layout_constraintTop_toTopOf="@id/view_value"
+        android:layout_marginStart="6dp"
+        />
+
+    <TextView
+        android:id="@+id/view_par"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N° Parcelas: "
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/view_value"
+        app:layout_constraintTop_toBottomOf="@id/view_value"
+        android:layout_marginTop="6dp"
+        />
+    <TextView
+        android:id="@+id/par"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/view_par"
+        app:layout_constraintTop_toTopOf="@id/view_par"
+        android:layout_marginStart="6dp"
+        />
+
+
+
+
+
+    <TextView
+        android:id="@+id/view_tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Linguagens e Softwares"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintTop_toBottomOf="@id/view_par"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        />
+
+    <GridView
+        android:id="@+id/grid_tools"
+        android:layout_width="0dp"
+        android:layout_height="344dp"
+        android:layout_marginTop="8dp"
+        android:horizontalSpacing="4dp"
+        android:numColumns="4"
+        android:verticalSpacing="4dp"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/view_tools" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/grid_tools"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_start"
+        app:layout_constraintEnd_toStartOf="@id/guideline_end"
+        style="@style/AppButtonStyle"
+        android:backgroundTint="@color/PRIMARY_GREEN"
+        android:text="Candidatar-se"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:textColor="@color/WHITE"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
