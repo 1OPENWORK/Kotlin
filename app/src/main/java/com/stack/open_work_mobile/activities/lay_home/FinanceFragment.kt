@@ -57,7 +57,7 @@ class FinanceFragment : Fragment() {
         if (retrofit != null) {
             financeService = retrofit.create(ProjectService::class.java)
         } else {
-            "Erro no retrofit ou ec2"
+            println("Erro no retrofit ou ec2")
         }
 
         binding.recebidoIcone.setOnClickListener {
