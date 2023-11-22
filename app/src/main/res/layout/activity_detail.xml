@@ -222,9 +222,11 @@
         android:horizontalSpacing="4dp"
         android:numColumns="4"
         android:verticalSpacing="4dp"
+        tools:listitem="@layout/item_tool"
         app:layout_constraintEnd_toStartOf="@id/guideline_end"
         app:layout_constraintStart_toEndOf="@id/guideline_start"
-        app:layout_constraintTop_toBottomOf="@+id/view_tools" />
+        app:layout_constraintTop_toBottomOf="@+id/view_tools"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="0dp"
