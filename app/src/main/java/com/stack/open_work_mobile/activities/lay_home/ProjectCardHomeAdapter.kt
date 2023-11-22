@@ -3,12 +3,15 @@ package com.stack.open_work_mobile.activities.lay_home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 import com.stack.open_work_mobile.R
 import com.bumptech.glide.Glide
 
+private var onItemClickListener: ProjectCardHomeAdapter.OnItemClickListener? = null
 
 class ProjectCardHomeAdapter(private val projectCardHomeList: ArrayList<CardProjectHome>) :
     RecyclerView.Adapter<ProjectCardHomeAdapter.MyViewHolderCardProject>() {
@@ -26,15 +29,18 @@ class ProjectCardHomeAdapter(private val projectCardHomeList: ArrayList<CardProj
         holder.avaliationCompany.text = currentItem.grade.toString()
         holder.describe.text = currentItem.description
         holder.qtdDev.text = currentItem.maxDevelopers.toString()
-        holder.value.text = currentItem.value.toString()
+        holder.value.text = currentItem.value
 
-        // Carregar a imagem da empresa usando Glide
-        val imageUrl = currentItem.imageCompany // Substitua isso pela lógica correta para obter a URL da imagem
+        val imageUrl = currentItem.imageCompany
         if (!imageUrl.isNullOrEmpty()) {
             Glide.with(holder.itemView.context)
                 .load(imageUrl)
                 .into(holder.companyLogo)
         }
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.onItemClick(position)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -48,5 +54,25 @@ class ProjectCardHomeAdapter(private val projectCardHomeList: ArrayList<CardProj
         val describe: TextView = itemView.findViewById(R.id.description_project)
         val qtdDev: TextView = itemView.findViewById(R.id.dev_number_id)
         val value: TextView = itemView.findViewById(R.id.value_id)
+        val button: Button = itemView.findViewById(R.id.click_detail)
+
+        init {
+            button.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onItemClickListener?.onItemClick(position)
+                }
+            }
+
+
+        }
     }
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        onItemClickListener = listener
+    }
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
 }
+
