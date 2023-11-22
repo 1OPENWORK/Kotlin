@@ -3,12 +3,15 @@ package com.stack.open_work_mobile.services
 
 import com.stack.open_work_mobile.activities.lay_home.CardProjectHome
 import com.stack.open_work_mobile.activities.lay_my_projects.ProjectProgressCard
+import com.stack.open_work_mobile.models.ProjectDetailsModel
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ProjectService {
 
+    @GET("/api/projetos/projeto/{projectId}")
+    fun getProjectDetails(@Path("projectId") id: Long): Call<ProjectDetailsModel>
     @GET("/api/projetos-aceitos/andamento/desenvolvedor/{userId}")
     fun getAllProgress(@Path("userId") id: Long): Call<List<ProjectProgressCard>>
 
