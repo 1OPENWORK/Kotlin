@@ -5,14 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
-<<<<<<< HEAD
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
-=======
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
->>>>>>> 8207f93f9f732298cd8da1cd175546fc445406af
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.activities.lay_home.HomeActivity
 import com.stack.open_work_mobile.api.Rest
