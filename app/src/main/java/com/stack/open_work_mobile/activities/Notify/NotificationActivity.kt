@@ -25,7 +25,14 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
+import com.stack.open_work_mobile.utils.NotificationUtils
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class NotificationActivity : AppCompatActivity() {
     private lateinit var itemList: MutableList<NotificationItem>
@@ -37,33 +44,31 @@ class NotificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification)
 
-
         val btn = findViewById<View>(R.id.arrow_back)
         btn.setOnClickListener {
             startActivity(Intent(this, HomeActivity::class.java))
         }
 
-        itemList = mutableListOf(
-            NotificationItem(
-                "Seu pagamento no valor de R\$1.500 do projeto XPTO ja esta la na sua carteira, clique e confira.",
-                R.drawable.cart
-            ),
-            NotificationItem(
-                "Adicione algumas informações e melhore ainda mais seu perfil.",
-                R.drawable.user
-            ),
-            NotificationItem(
-                "Adicione algumas informações e melhore ainda mais seu perfil.",
-                R.drawable.user
-            )
+        val data = findViewById<TextView>(R.id.titulo2_notification)
+
+        val formatoData = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dataAtual = Date()
+        val dataHoje = formatoData.format(dataAtual)
+        data.text = dataHoje
+
+        itemList = mutableListOf()
+
+        // Obtém as notificações salvas do SharedPreferences
+        val notificacoesSalvas = NotificationUtils.getNotificacoesSalvas(this)
+
+        // Adiciona as notificações salvas à lista itemList
+        itemList.addAll(notificacoesSalvas)
 
 
-        )
 
         itemList.forEach {
             itemList.forEachIndexed { index, item ->
                 val notificationId = index + 1
-                sendNotification(this,"Nova notificação" ,"${item.text}" ,item.imageResId, notificationId)
             }
         }
 
@@ -147,4 +152,7 @@ class NotificationActivity : AppCompatActivity() {
         val notificationId = 1 // Identificador único para a notificação
         notificationManager.notify(id, notificationBuilder.build())
     }
+
+
+
 }

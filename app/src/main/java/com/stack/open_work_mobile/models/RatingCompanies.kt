@@ -11,7 +11,7 @@ data class RatingCompanies(
 )
 
 data class Evaluate(
-    val id: Int,
+    val id: Long,
     val image: String,
     val name: String,
     val grade: Int,

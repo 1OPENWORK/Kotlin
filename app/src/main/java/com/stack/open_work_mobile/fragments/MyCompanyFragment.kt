@@ -1,5 +1,6 @@
 package com.stack.open_work_mobile.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,11 +11,13 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.stack.open_work_mobile.Interface.OnAvaliarClickListener
+import com.stack.open_work_mobile.MyFirebaseMessagingService
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.adapters.ListAdapterRatingCompany
 import com.stack.open_work_mobile.api.Rest
 import com.stack.open_work_mobile.models.RatingCompanies
 import com.stack.open_work_mobile.services.AvaliationService
+import com.stack.open_work_mobile.utils.NotificationUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,6 +28,7 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
     private lateinit var rating: ArrayList<RatingCompanies>
     private lateinit var recycleView: RecyclerView
     private lateinit var adapter: ListAdapterRatingCompany
+    private lateinit var fragmentContext: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +47,7 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
 
         recycleView.setHasFixedSize(true)
 
+        fragmentContext = requireContext()
         adapter = ListAdapterRatingCompany(rating, this)
 
         recycleView.adapter = adapter
@@ -60,38 +65,56 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
         dataInit()
     }
 
-    override fun onAvaliarClick(grade: Int) {
+    override fun onAvaliarClick(id: Long, nome: String, grade: Int) {
         val api = Rest.getInstance()?.create(AvaliationService::class.java)
-        val userId = 1 // Substitua pelo ID da empresa ou desenvolvedor desejado
+        val userId =
+            requireContext()
+                .getSharedPreferences("IDENTIFY", Context.MODE_PRIVATE)
+                .getLong("ID", 0)
 
-        // Configurar a chamada para enviar a avaliação
-        val call = api?.registerAvaliationDeveloper(userId, grade) // Convertemos o valor da classificação para um inteiro
+
+        val call = api?.registerAvaliationDeveloper(
+            id,
+            grade
+        )
 
 
         call?.enqueue(object : Callback<RatingCompanies> {
-            override fun onResponse(call: Call<RatingCompanies>, response: Response<RatingCompanies>) {
+            override fun onResponse(
+                call: Call<RatingCompanies>,
+                response: Response<RatingCompanies>
+            ) {
                 if (response.isSuccessful) {
                     Log.e("API Success", "Sucesso!")
                     dataInit()
+                    val titulo = "Avaliação concluída!"
+                    val message = "Sua Avaliação ${grade} para ${nome}"
+                    MyFirebaseMessagingService.sendNotificationAvaliation(
+                        fragmentContext,
+                        titulo,
+                        message
+                    )
+                    NotificationUtils.salvarNotificacao(fragmentContext,titulo,  message, R.drawable.sininho)
                 } else {
-                    // Lidar com erros na resposta
-                    Log.e("API Error", "Falha ao enviar a avaliação ${grade }")
+                    Log.e("API Error", "Falha ao enviar a avaliação ${grade}")
                 }
             }
 
             override fun onFailure(call: Call<RatingCompanies>, t: Throwable) {
-                // Lidar com falhas na chamada
-                Log.e("API Error", "Erro na chamada")            }
+                Log.e("API Error", "Erro na chamada")
+            }
         })
     }
-
 
 
     private fun dataInit() {
         val api = Rest.getInstance()?.create(AvaliationService::class.java)
         val list: ArrayList<RatingCompanies> = ArrayList()
-
-        api?.getAvaliationsCompany(1)?.enqueue(object : Callback<RatingCompanies> {
+        val userId =
+            requireContext()
+                .getSharedPreferences("IDENTIFY", Context.MODE_PRIVATE)
+                .getLong("ID", 0)
+        api?.getAvaliationsCompany(userId)?.enqueue(object : Callback<RatingCompanies> {
             override fun onResponse(
                 call: Call<RatingCompanies>,
                 response: Response<RatingCompanies>

@@ -7,12 +7,16 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import com.google.firebase.messaging.FirebaseMessaging
+import com.stack.open_work_mobile.MyFirebaseMessagingService
+import com.stack.open_work_mobile.activities.Notify.NotificationActivity
 import com.stack.open_work_mobile.databinding.ActivityLoginBinding
 import com.stack.open_work_mobile.activities.lay_home.HomeActivity
 import com.stack.open_work_mobile.api.Rest
 import com.stack.open_work_mobile.models.authModel.AuthForm
 import com.stack.open_work_mobile.models.authModel.AuthResponse
 import com.stack.open_work_mobile.services.AuthService
+import com.stack.open_work_mobile.utils.NotificationUtils
 import com.stack.open_work_mobile.utils.Util
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,6 +25,8 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var firebaseMessagingService: MyFirebaseMessagingService
+
 
     private val api by lazy {
         Rest.getInstance()?.create(AuthService::class.java)
@@ -34,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        firebaseMessagingService = MyFirebaseMessagingService()
         binding.btnLogin.setOnClickListener {
             val email: String = binding.emailInput.editText?.text.toString()
             val pass: String = binding.senhaInput.editText?.text.toString()
@@ -71,7 +77,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login(email: String, pass: String) {
         val loginRequest = AuthForm(email, pass)
-
         Log.d("LoginActivity", "Email: $email, Password: $pass")
         api?.authentication(loginRequest)?.enqueue(object : Callback<AuthResponse> {
             override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
@@ -99,6 +104,11 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<AuthResponse>, t: Throwable) {
                 Toast.makeText(baseContext, t.message, Toast.LENGTH_SHORT).show()
+                MyFirebaseMessagingService.sendNotification(
+                    baseContext,
+                    "Ops!, login Incorreto!",
+                    "Algo deu errado. Por favor, verifique suas credenciais e tente novamente."
+                )
             }
         })
     }
