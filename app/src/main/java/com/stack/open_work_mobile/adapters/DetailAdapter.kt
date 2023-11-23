@@ -23,10 +23,7 @@ class DetailAdapter(private val context: Context, private var item: ProjectDetai
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-    fun updateData(newData: ProjectDetailsModel) {
-        item = newData
-        notifyDataSetChanged()
-    }
+
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = LayoutInflater.from(context).inflate(R.layout.activity_detail, parent, false)
@@ -53,7 +50,7 @@ class DetailAdapter(private val context: Context, private var item: ProjectDetai
         val gridView: GridView = view.findViewById(R.id.grid_tools)
         val toolsAdapter = ToolAdapter(context, item.tools)
         gridView.adapter = toolsAdapter
-
+        notifyDataSetChanged()
         return view
     }
 }

@@ -3,7 +3,6 @@ package com.stack.open_work_mobile.activities.lay_login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.databinding.ActivityEntranceBinding
 
 class EntranceActivity : AppCompatActivity() {
