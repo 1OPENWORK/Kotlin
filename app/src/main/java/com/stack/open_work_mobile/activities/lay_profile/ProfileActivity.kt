@@ -3,6 +3,7 @@ package com.stack.open_work_mobile.activities.lay_profile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.JsonReader
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
@@ -12,13 +13,17 @@ import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.activities.lay_home.HomeActivity
+import com.stack.open_work_mobile.activities.lay_login.EntranceActivity
 import com.stack.open_work_mobile.api.Rest
 import com.stack.open_work_mobile.databinding.ActivityProfileBinding
 import com.stack.open_work_mobile.models.ApiResponse
+import com.stack.open_work_mobile.models.UpdateResponse
+import com.stack.open_work_mobile.models.authModel.UpdateProfileModel
 import com.stack.open_work_mobile.services.ProfileService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.log
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -34,6 +39,14 @@ class ProfileActivity : AppCompatActivity() {
         Intent(this, HomeActivity::class.java)
     }
 
+    private val entrance by lazy {
+        Intent(this, EntranceActivity::class.java)
+    }
+
+    private val profile by lazy {
+        UpdateProfileModel("" ,"","","","")
+    }
+
     private lateinit var dialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +59,10 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.btnExcluir.setOnClickListener {
             showDialog()
+        }
+
+        binding.btnAlterarDados.setOnClickListener {
+            updateProfileInfo()
         }
 
         tryGetInfo()
@@ -106,20 +123,49 @@ class ProfileActivity : AppCompatActivity() {
 
         val btnDelete = view.findViewById<AppCompatButton>(R.id.btn_delete)
         btnDelete.setOnClickListener {
-            api?.deleteProfile(userId)?.enqueue(object : Callback<ApiResponse> {
-                override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+            api?.deleteProfile(userId)?.enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
                     if (response.isSuccessful) {
-                        Log.d(response.toString(), "testando")
-                        build.setView(R.layout.activity_entrance)
+                        dialog.dismiss()
+                        startActivity(entrance)
                     }
                 }
 
-                override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                    Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    dialog.dismiss()
+                    startActivity(entrance)
                 }
             })
         }
         dialog = build.create()
         dialog.show()
+    }
+
+    private fun updateProfileInfo() {
+        val userId = this.getSharedPreferences("IDENTIFY", MODE_PRIVATE).getLong("ID", 0)
+        profile.name = binding.inputNome.text.toString()
+        profile.email = binding.inputEmail.text.toString()
+        profile.cpfCnpj = binding.inputCpf.text.toString()
+        profile.cellphone = binding.inputTelefone.text.toString()
+        profile.password = binding.inputSenha.text.toString()
+
+        api?.putProfileInfo(userId, profile)?.enqueue(object : Callback<UpdateResponse> {
+            override fun onResponse(call: Call<UpdateResponse>, response: Response<UpdateResponse>) {
+                if (response.isSuccessful) {
+                    val newToken = response.body()?.token
+                    val auth = getSharedPreferences("AUTH", MODE_PRIVATE)
+                    val editorAuth = auth.edit()
+                    editorAuth.putString("TOKEN", newToken)
+                    editorAuth.apply()
+                    Toast.makeText(baseContext, "Perfil atualizado com sucesso", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(baseContext, "Não atualizado", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<UpdateResponse>, t: Throwable) {
+                Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 }

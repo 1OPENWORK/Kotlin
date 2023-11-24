@@ -66,100 +66,130 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/container_nome"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/img_profile"
             android:textColorHint="@color/PRIMARY_GREEN"
-            app:boxBackgroundColor="@color/PRIMARY_GREEN_LIGHT">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_profile">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_nome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/WHITE"
+                android:background="@drawable/input_login"
                 android:hint="Nome"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textSize="14sp"
-                />
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/container_email"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/container_nome"
             android:textColorHint="@color/PRIMARY_GREEN"
-            app:boxBackgroundColor="@color/PRIMARY_GREEN_LIGHT">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_nome">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
-                android:background="@color/WHITE"
+                android:background="@drawable/input_login"
                 android:hint="E-mail"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/container_cpf"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/container_email"
             android:enabled="false"
             android:textColorHint="@color/PRIMARY_GREEN"
-            app:boxBackgroundColor="@color/PRIMARY_GREEN_LIGHT">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_cpf"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
-                android:background="@color/WHITE"
+                android:background="@drawable/input_login"
                 android:hint="CPF"
                 android:inputType="number"
                 android:maxLength="14"
                 android:maxLines="1"
-                android:textSize="14sp"
-                />
+                android:textSize="14sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/container_telefone"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/container_cpf"
             android:textColorHint="@color/PRIMARY_GREEN"
-            app:boxBackgroundColor="@color/PRIMARY_GREEN_LIGHT">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_cpf">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_telefone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/input_login"
                 android:hint="Telefone"
                 android:inputType="phone"
-                android:maxLines="1"
-                android:textSize="14sp"
                 android:maxLength="15"
-                android:background="@color/WHITE"/>
+                android:maxLines="1"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <com.google.android.material.divider.MaterialDivider-->
+<!--            android:id="@+id/divider"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/container_telefone"-->
+<!--            android:layout_marginVertical="32dp"/>-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/container_senha"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/PRIMARY_GREEN"
+            app:boxBackgroundColor="@color/PRIMARY_GREEN_LIGHT"
+            app:helperText="Para garantir sua segurança, pedimos que confirme sua intenção inserindo sua senha."
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/BLACK"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/container_telefone"
+            android:layout_marginTop="32dp"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_senha"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:background="@color/WHITE"
+                android:hint="Senha"
+                android:inputType="textPassword"
+                android:maxLength="15"
+                android:maxLines="1"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_salvar"
+            android:id="@+id/btn_alterar_dados"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -173,7 +203,7 @@
             app:layout_constraintEnd_toStartOf="@id/btn_excluir"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/container_telefone" />
+            app:layout_constraintTop_toBottomOf="@id/container_senha" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_excluir"
@@ -187,8 +217,8 @@
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toEndOf="@id/btn_salvar"
-            app:layout_constraintTop_toTopOf="@id/btn_salvar" />
+            app:layout_constraintStart_toEndOf="@id/btn_alterar_dados"
+            app:layout_constraintTop_toTopOf="@id/btn_alterar_dados" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
