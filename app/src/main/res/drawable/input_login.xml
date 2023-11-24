@@ -1,9 +1,9 @@
 <shape xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:ignore="ExtraText">
-    <solid android:color="#0D00FF85" /> <!-- Cor de fundo -->
+    <solid android:color="#1A00FF85" /> <!-- Cor de fundo -->
     <stroke
         android:width="1dp"
-        android:color="#1C20AC69" />
+        android:color="#2620AC69" />
     <corners android:radius="12dp" /> <!-- Raio de borda -->
 </shape>

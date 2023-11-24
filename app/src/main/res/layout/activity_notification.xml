@@ -12,7 +12,7 @@
         android:layout_height="28dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="28dp"
-        android:background="@drawable/ic_arrow_back_header_my_project"
+        android:background="@drawable/arrow_back"
         android:backgroundTint="@color/PRIMARY_GREEN"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

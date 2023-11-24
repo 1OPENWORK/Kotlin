@@ -180,7 +180,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
-                android:background="@color/WHITE"
+                android:background="@drawable/input_login"
                 android:hint="Senha"
                 android:inputType="textPassword"
                 android:maxLength="15"
