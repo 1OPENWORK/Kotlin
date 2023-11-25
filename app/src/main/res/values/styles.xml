@@ -8,6 +8,7 @@
         <item name="itemTextColor">@color/bottom_nav_text_selector</item>
         <item name="itemIconTint">@color/bottom_nav_icon_selector</item>
         <item name="android:background">@drawable/bg_bottom_nav</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
     </style>
 
     <style name="RoundedImageView">
@@ -62,6 +63,11 @@
     <style name="minhas_aval">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">#20AC69</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
 </resources>

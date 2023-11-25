@@ -11,8 +11,8 @@ interface AvaliationService {
     @GET("/api/avaliacoes/desenvolvedor/{id}")
     fun getAvaliationsDev(@Path("id") id: Long): Call<RatingCompanies>
 
-    @GET("/api/avaliacoes/empresa/{id}")
-    fun getAvaliationsCompany(@Path("id") id: Long): Call<RatingCompanies>
+//    @GET("/api/avaliacoes/empresa/{id}")
+//    fun getAvaliationsCompany(@Path("id") id: Long): Call<RatingCompanies>
 
     @POST("/api/avaliacoes/desenvolvedor/{id}/{grade}/{idUser}")
     fun registerAvaliationDeveloper(
@@ -20,6 +20,4 @@ interface AvaliationService {
         @Path("grade") grade: Int,
         @Path("idUser") idUser: Long
     ): Call<RatingCompanies>
-
-
 }
