@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="68dp"
-                android:fontFamily="@font/nunito_black"
+                android:fontFamily="@font/nunito_500"
                 android:text="Ultimo Projeto"
                 android:textColor="#20AC69"
                 android:textSize="12sp"
@@ -54,20 +54,20 @@
 
                 <TextView
                     android:id="@+id/porcentagem"
-                    android:layout_width="80dp"
+                    android:layout_width="88dp"
                     android:layout_height="45dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/button_sininho"
                     android:fontFamily="@font/nunito_black"
                     android:paddingTop="13dp"
-                    android:text="+ 00%"
+                    android:text="valor Recebido:"
                     android:textAlignment="center"
                     android:textColor="#20AC69"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/porcentagemNum"
-                    android:layout_width="80dp"
+                    android:layout_width="88dp"
                     android:layout_height="45dp"
                     android:layout_marginTop="4dp"
                     android:background="@drawable/button_chat"
@@ -76,7 +76,7 @@
                     android:text="+0"
                     android:textAlignment="center"
                     android:textColor="#20AC69"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <LinearLayout

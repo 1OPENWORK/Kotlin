@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Openworkmobile"
         tools:targetApi="31">
         <activity
+            android:name=".activities.lay_home.DetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.lay_profile.ProfileActivity"
             android:exported="false" />
         <activity

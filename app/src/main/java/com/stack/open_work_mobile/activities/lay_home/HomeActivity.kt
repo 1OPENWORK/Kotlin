@@ -12,6 +12,7 @@ import com.stack.open_work_mobile.activities.lay_my_projects.MyProject
 import com.stack.open_work_mobile.activities.lay_profile.ProfileActivity
 import com.stack.open_work_mobile.databinding.ActivityHomeBinding
 import com.stack.open_work_mobile.utils.Util
+import com.bumptech.glide.Glide
 
 
 class HomeActivity : AppCompatActivity() {
@@ -37,6 +38,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loadProfileImage()
 
         replaceFragment(HomeMenuFragment())
 
@@ -66,6 +69,9 @@ class HomeActivity : AppCompatActivity() {
         Util.applyIconColor(binding.bottomNavigationViewHome, select)
     }
 
+
+
+
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -74,7 +80,19 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
+    private fun loadProfileImage() {
+
+        val imgPref = getSharedPreferences("IMAGE", MODE_PRIVATE)
+        val imageUrl = imgPref.getString("IMG", "")
+
+        if (!imageUrl.isNullOrEmpty()) {
+            Glide.with(this)
+                .load(imageUrl)
+                .into(binding.profileImageView)
+        }
+    }
 }
+
 
 
 

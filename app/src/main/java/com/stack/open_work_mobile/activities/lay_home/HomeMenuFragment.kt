@@ -3,7 +3,9 @@ package com.stack.open_work_mobile.activities.lay_home
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +36,7 @@ private lateinit var projectCardProjectHomeList: ArrayList<CardProjectHome>
  * Use the [HomeMenuFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeMenuFragment : Fragment() {
+class HomeMenuFragment : Fragment(), ProjectCardHomeAdapter.OnItemClickListener  {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -54,12 +56,16 @@ class HomeMenuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_home_menu, container, false)
         recyclerView = view.findViewById(R.id.recycle_view_card_home)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.setHasFixedSize(true)
-        adapter = ProjectCardHomeAdapter(projectCardProjectHomeList)
+
+        adapter = ProjectCardHomeAdapter(ArrayList())
+        adapter.setOnItemClickListener(this)
         recyclerView.adapter = adapter
+
         return view
     }
 
@@ -129,5 +135,16 @@ class HomeMenuFragment : Fragment() {
 
         })
 
+    }
+
+    override fun onItemClick(position: Int) {
+        Log.d("Debug", "Item clicado na posição: $position")
+        if (isAdded && activity != null) {
+            val projetoSelecionado = projectCardProjectHomeList[position]
+            Log.d("Debug", "Projeto selecionado: ${projetoSelecionado.id}")
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra("projetoId", projetoSelecionado.id)
+            startActivity(intent)
+        }
     }
 }

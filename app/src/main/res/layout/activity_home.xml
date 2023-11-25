@@ -72,14 +72,11 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/id_notify"
             style="@style/AppButtonStyle"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="14dp"
-            android:layout_weight="1"
             android:drawableStart="@drawable/ic_notify_menu_float"
-            android:drawableEnd="@drawable/ic_user_profile"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp" />
+            android:paddingHorizontal="26dp"/>
     </LinearLayout>
 
 
