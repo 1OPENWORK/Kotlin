@@ -8,6 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.models.NotificationItem
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class NotifyAdapter(private val itemList: List<NotificationItem>) :
     RecyclerView.Adapter<NotifyAdapter.ViewHolder>() {
@@ -22,6 +25,7 @@ class NotifyAdapter(private val itemList: List<NotificationItem>) :
         val item = itemList[position]
         holder.textItem.text = item.text
         holder.imageView.setImageResource(item.imageResId)
+
 
         // Você pode adicionar código aqui para configurar outros elementos do layout
     }

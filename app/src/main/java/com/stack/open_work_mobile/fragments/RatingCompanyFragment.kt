@@ -1,5 +1,6 @@
 package com.stack.open_work_mobile.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.stack.open_work_mobile.Interface.OnAvaliarClickListener
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.adapters.ListAdapterMyRating
 import com.stack.open_work_mobile.adapters.ListAdapterRatingCompany
@@ -31,13 +33,14 @@ private const val ARG_PARAM2 = "param2"
  * Use the [RatingCompanyFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RatingCompanyFragment : Fragment() {
+class RatingCompanyFragment : Fragment(){
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var adapter: ListAdapterMyRating
     private lateinit var rating: ArrayList<RatingCompanies>
     private lateinit var recycleView: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,7 +100,10 @@ class RatingCompanyFragment : Fragment() {
     private fun dataInit() {
         val api = Rest.getInstance()?.create(AvaliationService::class.java)
 
-        val userId = 3 // Substitua pelo ID do desenvolvedor desejado
+        val userId =
+            requireContext()
+                .getSharedPreferences("IDENTIFY", Context.MODE_PRIVATE)
+                .getLong("ID", 0)// Substitua pelo ID do desenvolvedor desejado
 
         api?.getAvaliationsDev(userId)?.enqueue(object : Callback<RatingCompanies> {
             override fun onResponse(

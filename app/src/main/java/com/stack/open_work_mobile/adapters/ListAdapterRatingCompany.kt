@@ -48,8 +48,10 @@ class ListAdapterRatingCompany(
             .override(100, 100)
             .into(holder.logo)
         holder.buttonAvaliar.setOnClickListener {
-            val grade = holder.rating.rating
-            clickListener.onAvaliarClick(grade.toInt())
+            val idEmpresa = currentItem.evaluates[position].id
+            val nomeEmpresa = currentItem.evaluates[position].name
+            val grade = currentItem.evaluates[position].grade
+            clickListener.onAvaliarClick(idEmpresa, nomeEmpresa, grade)
         }
     }
 

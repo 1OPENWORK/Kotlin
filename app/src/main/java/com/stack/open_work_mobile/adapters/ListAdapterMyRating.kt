@@ -13,13 +13,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.stack.open_work_mobile.Interface.OnAvaliarClickListener
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.models.MyRating
 import com.stack.open_work_mobile.models.RatingCompanies
 import org.w3c.dom.Text
 
 class ListAdapterMyRating(
-    private val ratingCompanies: ArrayList<RatingCompanies>
+    private val ratingCompanies: ArrayList<RatingCompanies>,
+
 ) : RecyclerView.Adapter<ListAdapterMyRating.MyViewHolderListRatingCompany>() {
 
     override fun onCreateViewHolder(
@@ -48,6 +50,7 @@ class ListAdapterMyRating(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .override(100, 100)
             .into(holder.logo)
+
     }
 
     class MyViewHolderListRatingCompany(itemView: View) : RecyclerView.ViewHolder(itemView) {
