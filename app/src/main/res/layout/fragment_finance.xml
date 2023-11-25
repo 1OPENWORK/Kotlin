@@ -60,7 +60,7 @@
                     android:background="@drawable/button_sininho"
                     android:fontFamily="@font/nunito_black"
                     android:paddingTop="13dp"
-                    android:text="valor Recebido:"
+                    android:text="Valor total:"
                     android:textAlignment="center"
                     android:textColor="#20AC69"
                     android:textSize="10sp" />

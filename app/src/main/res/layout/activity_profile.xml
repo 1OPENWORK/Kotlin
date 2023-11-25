@@ -62,7 +62,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/subtitle"
-            app:shapeAppearanceOverlay="@style/RoundedImageView" />
+            app:shapeAppearanceOverlay="@style/RoundedImageView"
+            android:scaleType="centerCrop"
+            />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/container_nome"

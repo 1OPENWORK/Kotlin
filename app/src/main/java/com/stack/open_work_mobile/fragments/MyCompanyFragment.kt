@@ -114,7 +114,7 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
             requireContext()
                 .getSharedPreferences("IDENTIFY", Context.MODE_PRIVATE)
                 .getLong("ID", 0)
-        api?.getAvaliationsCompany(userId)?.enqueue(object : Callback<RatingCompanies> {
+        api?.getAvaliationsDev(userId)?.enqueue(object : Callback<RatingCompanies> {
             override fun onResponse(
                 call: Call<RatingCompanies>,
                 response: Response<RatingCompanies>
