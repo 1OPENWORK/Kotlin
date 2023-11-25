@@ -37,7 +37,7 @@ class RatingCompanyFragment : Fragment(){
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var adapter: ListAdapterMyRating
+    private lateinit var adapter: ListAdapterRatingCompany
     private lateinit var rating: ArrayList<RatingCompanies>
     private lateinit var recycleView: RecyclerView
 
@@ -63,7 +63,8 @@ class RatingCompanyFragment : Fragment(){
 
         recycleView.setHasFixedSize(true)
 
-        adapter = ListAdapterMyRating(rating)
+        adapter = ListAdapterRatingCompany(rating)
+        Log.e("Adapter", "${adapter.itemCount}")
 
         recycleView.adapter = adapter
 
@@ -114,11 +115,15 @@ class RatingCompanyFragment : Fragment(){
                     val avaliationListsDto = response.body()
 
                     if (avaliationListsDto != null) {
-                        val evaluates = avaliationListsDto.evaluates
-                        for (evaluate in evaluates) {
-                            rating.add(avaliationListsDto)
-                            adapter.notifyDataSetChanged()
+                        val evaluates = avaliationListsDto.myAvaliations
+                        Log.e("myAvaliations", "$evaluates")
+                            for (evaluate in evaluates){
+                                rating.add(avaliationListsDto)
                         }
+
+                            adapter.notifyDataSetChanged()
+                            Log.e("myAvaliations", "$rating")
+
                     }
                 } else {
                     Toast.makeText(requireContext(), response.message(), Toast.LENGTH_LONG).show()

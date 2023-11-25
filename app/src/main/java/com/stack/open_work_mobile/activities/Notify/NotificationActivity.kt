@@ -65,7 +65,6 @@ class NotificationActivity : AppCompatActivity() {
         itemList.addAll(notificacoesSalvas)
 
 
-
         itemList.forEach {
             itemList.forEachIndexed { index, item ->
                 val notificationId = index + 1

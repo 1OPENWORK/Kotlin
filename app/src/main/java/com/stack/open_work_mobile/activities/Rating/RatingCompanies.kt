@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout
 import com.stack.open_work_mobile.R
 import com.stack.open_work_mobile.activities.lay_home.HomeActivity
 import com.stack.open_work_mobile.adapters.FragmentPageAdapter
+import com.stack.open_work_mobile.fragments.RatingCompanyFragment
 import com.stack.open_work_mobile.models.RatingCompanies
 
 
@@ -73,4 +74,6 @@ class RatingCompanies : AppCompatActivity() {
         })
 
     }
+
+
 }

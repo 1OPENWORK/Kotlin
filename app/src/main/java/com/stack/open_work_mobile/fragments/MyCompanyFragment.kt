@@ -1,6 +1,7 @@
 package com.stack.open_work_mobile.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.stack.open_work_mobile.Interface.OnAvaliarClickListener
 import com.stack.open_work_mobile.MyFirebaseMessagingService
 import com.stack.open_work_mobile.R
+import com.stack.open_work_mobile.activities.lay_home.HomeActivity
+import com.stack.open_work_mobile.adapters.ListAdapterMyRating
 import com.stack.open_work_mobile.adapters.ListAdapterRatingCompany
 import com.stack.open_work_mobile.api.Rest
 import com.stack.open_work_mobile.models.RatingCompanies
@@ -27,8 +30,10 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
 
     private lateinit var rating: ArrayList<RatingCompanies>
     private lateinit var recycleView: RecyclerView
-    private lateinit var adapter: ListAdapterRatingCompany
+    private lateinit var adapter: ListAdapterMyRating
     private lateinit var fragmentContext: Context
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +53,7 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
         recycleView.setHasFixedSize(true)
 
         fragmentContext = requireContext()
-        adapter = ListAdapterRatingCompany(rating, this)
+        adapter = ListAdapterMyRating(rating, this)
 
         recycleView.adapter = adapter
 
@@ -65,19 +70,18 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
         dataInit()
     }
 
-    override fun onAvaliarClick(id: Long, nome: String, grade: Int) {
+    override fun onAvaliarClick(id: Int, nome: String, grade: Int) {
         val api = Rest.getInstance()?.create(AvaliationService::class.java)
+
         val userId =
             requireContext()
                 .getSharedPreferences("IDENTIFY", Context.MODE_PRIVATE)
                 .getLong("ID", 0)
-
-
         val call = api?.registerAvaliationDeveloper(
             id,
-            grade
+            grade,
+            userId
         )
-
 
         call?.enqueue(object : Callback<RatingCompanies> {
             override fun onResponse(
@@ -88,20 +92,27 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
                     Log.e("API Success", "Sucesso!")
                     dataInit()
                     val titulo = "Avaliação concluída!"
-                    val message = "Sua Avaliação ${grade} para ${nome}"
+                    val message = "Sua Avaliação: ${grade} para ${nome}"
                     MyFirebaseMessagingService.sendNotificationAvaliation(
                         fragmentContext,
                         titulo,
                         message
                     )
-                    NotificationUtils.salvarNotificacao(fragmentContext,titulo,  message, R.drawable.sininho)
+                    NotificationUtils.salvarNotificacao(
+                        fragmentContext,
+                        titulo,
+                        message,
+                        R.drawable.sininho
+                    )
+
+                    startActivity(Intent(requireActivity(), com.stack.open_work_mobile.activities.Rating.RatingCompanies::class.java))
                 } else {
-                    Log.e("API Error", "Falha ao enviar a avaliação ${grade}")
+                    Log.e("API Error", "Falha ao enviar a avaliação ${response}")
                 }
             }
 
             override fun onFailure(call: Call<RatingCompanies>, t: Throwable) {
-                Log.e("API Error", "Erro na chamada")
+                Log.e("API Error", "Erro na chamada ${t.message}")
             }
         })
     }
@@ -114,7 +125,7 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
             requireContext()
                 .getSharedPreferences("IDENTIFY", Context.MODE_PRIVATE)
                 .getLong("ID", 0)
-        api?.getAvaliationsCompany(userId)?.enqueue(object : Callback<RatingCompanies> {
+        api?.getAvaliationsDev(userId)?.enqueue(object : Callback<RatingCompanies> {
             override fun onResponse(
                 call: Call<RatingCompanies>,
                 response: Response<RatingCompanies>
@@ -124,10 +135,14 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
                     Log.e("API Success", "Sucesso! $avaliationListsDto")
                     if (avaliationListsDto != null) {
                         val evaluates = avaliationListsDto.evaluates
-                        for (evaluate in evaluates) {
-                            rating.add(avaliationListsDto)
-                            adapter.notifyDataSetChanged()
-                        }
+
+                            for (evaluate in evaluates) {
+                                rating.add(avaliationListsDto)
+                            }
+
+
+
+                        adapter.notifyDataSetChanged()
                     }
                 } else {
                     Toast.makeText(requireContext(), response.message(), Toast.LENGTH_LONG).show()
@@ -139,7 +154,11 @@ class MyCompanyFragment : Fragment(), OnAvaliarClickListener {
                 Toast.makeText(requireContext(), t.message, Toast.LENGTH_LONG).show()
             }
         })
+
+
     }
+
+
 
 
 }
