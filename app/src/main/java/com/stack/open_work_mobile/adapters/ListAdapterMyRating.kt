@@ -21,7 +21,7 @@ import org.w3c.dom.Text
 
 class ListAdapterMyRating(
     private val ratingCompanies: ArrayList<RatingCompanies>,
-
+    private val clickListener: OnAvaliarClickListener
 ) : RecyclerView.Adapter<ListAdapterMyRating.MyViewHolderListRatingCompany>() {
 
     override fun onCreateViewHolder(
@@ -29,7 +29,7 @@ class ListAdapterMyRating(
         viewType: Int
     ): MyViewHolderListRatingCompany {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_my_rating_company, parent, false)
+            .inflate(R.layout.list_my_rating, parent, false)
         return MyViewHolderListRatingCompany(itemView)
     }
 
@@ -38,6 +38,7 @@ class ListAdapterMyRating(
     }
 
     override fun onBindViewHolder(holder: MyViewHolderListRatingCompany, position: Int) {
+
         val currentItem = ratingCompanies[position]
 
         holder.name.text = currentItem.evaluates[position].name
@@ -50,15 +51,26 @@ class ListAdapterMyRating(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .override(100, 100)
             .into(holder.logo)
+        holder.buttonAvaliar.setOnClickListener {
+            val idEmpresa = currentItem.evaluates[position].id
+            val nomeEmpresa = currentItem.evaluates[position].name
+            val grade = holder.rating.rating
+            clickListener.onAvaliarClick(idEmpresa, nomeEmpresa, grade.toInt())
+        }
+
 
     }
 
     class MyViewHolderListRatingCompany(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.findViewById<TextView>(R.id.tv_nome_company)
-        val description: TextView = itemView.findViewById<TextView>(R.id.tv_description)
-        val timeExpected: TextView = itemView.findViewById<TextView>(R.id.tv_data)
-        val myGrade: TextView = itemView.findViewById<TextView>(R.id.tv_stars)
-        val logo: ImageView = itemView.findViewById(R.id.logoempresa)
-        val rating: RatingBar = itemView.findViewById<RatingBar>(R.id.rb_starts)
+
+
+        val name: TextView = itemView.findViewById<TextView>(R.id.tv_nome_empresa2)
+        val description: TextView = itemView.findViewById<TextView>(R.id.tv_description2)
+        val timeExpected: TextView = itemView.findViewById<TextView>(R.id.tv_data2)
+        val myGrade: TextView = itemView.findViewById<TextView>(R.id.tv_stars2)
+        val buttonAvaliar: Button = itemView.findViewById<Button>(R.id.btn_avaliar)
+        val rating: RatingBar = itemView.findViewById<RatingBar>(R.id.rb_starts2)
+        val logo: ImageView = itemView.findViewById(R.id.ivLogoEmpresa)
+
     }
 }
