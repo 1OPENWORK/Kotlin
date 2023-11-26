@@ -4,18 +4,22 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.stack.open_work_mobile.R
+import com.stack.open_work_mobile.activities.Notify.NotificationActivity
 import com.stack.open_work_mobile.databinding.ActivityMyProjectsBinding
 import com.stack.open_work_mobile.activities.lay_home.HomeActivity
 import com.stack.open_work_mobile.utils.Util
-import java.util.Objects
 
 @Suppress("DEPRECATION")
 class MyProject : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyProjectsBinding
+
+    private val notify by lazy {
+        Intent(this, NotificationActivity::class.java)
+    }
+
     @SuppressLint("UseCompatLoadingForColorStateLists")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +32,11 @@ class MyProject : AppCompatActivity() {
             val intentToHome = Intent(this, HomeActivity::class.java)
             startActivity(intentToHome)
         }
+
+        binding.idNotify.setOnClickListener {
+            startActivity(notify)
+        }
+
         binding.bottomNavigationViewMyProject.setOnItemSelectedListener() {
             when (it.itemId) {
                 R.id.progress_id -> replaceFragment(ProgressMenuFragment())
