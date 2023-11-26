@@ -8,7 +8,6 @@
     android:layout_marginHorizontal="32dp"
     android:layout_marginBottom="24dp">
 
-
     <LinearLayout
         android:id="@+id/company_title"
         android:layout_width="0dp"
@@ -77,10 +76,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:text="Criar plataforma freelancer do zero, backend, frontend, bd conectado na nuvem, e aplicação mobile."
-        android:textSize="12dp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/logo_company"
-        app:layout_constraintTop_toBottomOf="@id/company_title" />
+        app:layout_constraintTop_toBottomOf="@id/company_title"
+        android:maxLines="3"
+        android:layout_marginEnd="8dp"/>
 
     <LinearLayout
         android:id="@+id/linearEspecificationProject"
@@ -195,6 +196,5 @@
             android:textSize="12sp"
             android:textStyle="bold" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
