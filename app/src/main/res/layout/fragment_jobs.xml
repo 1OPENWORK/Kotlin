@@ -23,7 +23,8 @@
                 android:paddingBottom="8dp"
                 android:text="Encontre os jobs disponiveis para você"
                 android:textColor="@color/PRIMARY_GREEN"
-                android:textSize="12sp"
+                android:textSize="16sp"
+                android:fontFamily="@font/nunito_black"
                 android:textStyle="normal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

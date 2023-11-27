@@ -24,13 +24,13 @@
                 android:id="@+id/trend"
                 android:layout_width="match_parent"
                 android:layout_height="22dp"
-                android:layout_marginLeft="34dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="34dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="32dp"
                 android:text="Tendências Populares"
                 android:textColor="@color/PRIMARY_GREEN"
                 android:textSize="16sp"
-                android:textStyle="bold|normal"
+                android:fontFamily="@font/nunito_black"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="34dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="34dp"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@id/trend">
@@ -46,21 +46,21 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="33dp"
-                    android:text="1# Java"
+                    android:text="1º Java"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="33dp"
-                    android:text="2# React Native"
+                    android:text="2º React"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="33dp"
-                    android:text="3# Infraestrutura cloud"
+                    android:text="3º HTML"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -70,20 +70,20 @@
                 android:id="@+id/projectsMenu"
                 android:layout_width="match_parent"
                 android:layout_height="22dp"
-                android:layout_marginLeft="34dp"
+                android:layout_marginLeft="32dp"
                 android:layout_marginTop="42dp"
-                android:layout_marginRight="34dp"
+                android:layout_marginRight="32dp"
                 android:text="Projetos"
                 android:textColor="@color/PRIMARY_GREEN"
                 android:textSize="16sp"
-                android:textStyle="bold|normal"
+                android:fontFamily="@font/nunito_black"
                 app:layout_constraintTop_toBottomOf="@id/linearForTrend" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycle_view_card_home"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="14dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/projectsMenu"
